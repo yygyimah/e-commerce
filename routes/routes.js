@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from "../pages/login";
 import Home from "../pages/home";
 import Details from "../pages/details";
+import {Button} from "react-native";
+import Cart from "../pages/cart";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +24,7 @@ export default function Navigator() {
                 <Stack.Screen
                     name="Home"
                     component={Home}
-                    options={{
+                    options={({navigation}) => ({
                         title: 'Home',
                         headerStyle: {
                             backgroundColor: '#002171',
@@ -32,12 +34,28 @@ export default function Navigator() {
                             fontWeight: 'bold',
                         },
                         headerLeft: () => null,
-                        headerBackVisible: false
+                        headerBackVisible: false,
+                    })}
+
+                />
+                <Stack.Screen name="Details" component={Details} />
+                <Stack.Screen
+                    name="Cart"
+                    component={Cart}
+                    options={{
+                        title: 'Cart',
+                        headerStyle: {
+                            backgroundColor: '#002171',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+
 
                     }}
 
                 />
-                <Stack.Screen name="Details" component={Details} />
             </Stack.Navigator>
         </NavigationContainer>
     );
