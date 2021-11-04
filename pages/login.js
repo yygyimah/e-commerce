@@ -4,19 +4,46 @@ import {
     StyleSheet,
     Text,
     View,
-    Image,
     TextInput,
-    Button,
     TouchableOpacity,
+    Alert,
 } from "react-native";
 
-export default function Login() {
+export default function Login({navigation}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const isEmailValid = (address) => {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(address).toLowerCase());
+    }
+
+    const loginPressHandler = () => {
+
+        if (!isEmailValid(email)) {
+            Alert.alert("Error", "Invalid email address", [
+                {
+                    text: "Close",
+
+                    onPress: () => {}
+                }
+            ])
+        }else if (password.trim().length === 0) {
+            Alert.alert("Error", "Please provide a password", [
+                {
+                    text: "Close",
+
+                    onPress: () => {}
+                }
+            ])
+        }else{
+            navigation.navigate('Home')
+        }
+
+    }
+
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={require("./assets/log2.png")} />
 
             <StatusBar style="auto" />
             <View style={styles.inputView}>
@@ -38,11 +65,8 @@ export default function Login() {
                 />
             </View>
 
-            <TouchableOpacity>
-                <Text style={styles.forgot_button}>Forgot Password?</Text>
-            </TouchableOpacity>
 
-            <TouchableOpacity style={styles.loginBtn}>
+            <TouchableOpacity style={styles.loginBtn} onPress={loginPressHandler}>
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
         </View>
@@ -62,8 +86,10 @@ const styles = StyleSheet.create({
     },
 
     inputView: {
-        backgroundColor: "#FFC0CB",
-        borderRadius: 30,
+        borderBottomColor: '#bbb',
+        borderBottomWidth: 1,
+        backgroundColor: "#fff",
+        borderRadius: 5,
         width: "70%",
         height: 45,
         marginBottom: 20,
@@ -78,11 +104,6 @@ const styles = StyleSheet.create({
         marginLeft: 20,
     },
 
-    forgot_button: {
-        height: 30,
-        marginBottom: 30,
-    },
-
     loginBtn: {
         width: "80%",
         borderRadius: 25,
@@ -90,6 +111,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginTop: 40,
-        backgroundColor: "#FF1493",
+        backgroundColor: "#002171",
     },
+    loginText: {
+        color: '#fff'
+    }
 });
