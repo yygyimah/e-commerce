@@ -56,7 +56,7 @@ export default function Cart({navigation}) {
     }, []);
 
     return (
-        <View style={{flex:1,alignItems: 'center', justifyContent: 'center'}}>
+        <View style={styles.container}>
             <StatusBar style='light'/>
 
             <FlatList
@@ -75,5 +75,9 @@ export default function Cart({navigation}) {
 }
 
 const styles = StyleSheet.create({
-
+    container: {
+        flex:1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
 });
