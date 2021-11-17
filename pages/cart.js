@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {View, FlatList, StyleSheet} from "react-native";
+import {View, FlatList, StyleSheet, Alert} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CartItem from "../components/cartItem";
@@ -12,7 +12,7 @@ export default function Cart({navigation}) {
     const loadCart = async () => {
         try {
             let cart = await AsyncStorage.getItem('cart')
-            setCart(JSON.parse(cart))
+            setCart(JSON.parse(cart).filter(c => c.quantity > 0))
         }catch (e) {
             console.log(e)
         }
@@ -51,6 +51,22 @@ export default function Cart({navigation}) {
         await AsyncStorage.setItem('cart', JSON.stringify(cart))
     }
 
+    const checkout = () => {
+        if (cart.length === 0) {
+            Alert.alert(
+                "Oops",
+                "Sorry no items in your cart",
+                [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+            );
+
+            return
+        }
+
+        navigation.push('Checkout')
+    }
+
     useEffect(async () => {
         await loadCart()
     }, []);
@@ -67,7 +83,7 @@ export default function Cart({navigation}) {
                 )}
             />
 
-            <FAB title="Checkout" placement='right' size='small' color='#002171' onPress={() => console.log('clearing')} />
+            <FAB title="Checkout" placement='right' size='small' color='#002171' onPress={checkout} />
 
         </View>
     );

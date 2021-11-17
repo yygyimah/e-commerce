@@ -5,6 +5,7 @@ import Login from "../pages/login";
 import Home from "../pages/home";
 import Cart from "../pages/cart";
 import ProductDetails from "../pages/details";
+import Checkout from "../pages/checkout";
 
 const Stack = createNativeStackNavigator();
 
@@ -49,8 +50,6 @@ export default function Navigator() {
                         headerTitleStyle: {
                             fontWeight: 'bold',
                         },
-
-
                     }}
 
                 />
@@ -59,6 +58,23 @@ export default function Navigator() {
                     component={ProductDetails}
                     options={{
                         title: 'Product Details',
+                        headerStyle: {
+                            backgroundColor: '#002171',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+
+                    }}
+
+                />
+
+                <Stack.Screen
+                    name="Checkout"
+                    component={Checkout}
+                    options={{
+                        title: 'Checkout',
                         headerStyle: {
                             backgroundColor: '#002171',
                         },
